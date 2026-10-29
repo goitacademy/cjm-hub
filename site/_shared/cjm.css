@@ -1,0 +1,403 @@
+/* Shared design of all CJM pages. Markup is built by cjm.js. */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #EDECE8;
+  --blue:     #A8B8F0;
+  --pink:     #F5B8B8;
+  --green:    #A8E6CF;
+  --yellow:   #FFE0A0;
+  --purple:   #C8B8F0;
+  --black:    #1A1A1A;
+  --grey:     #6B6B6B;
+  --card-bg:  #FFFFFF;
+  --shadow:   0 4px 24px rgba(0,0,0,0.08);
+  --shadow-h: 0 8px 36px rgba(0,0,0,0.14);
+  --radius:   20px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg);
+  color: var(--black);
+  min-height: 100vh;
+  padding-bottom: 64px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  padding: 36px 56px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--black);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+.header-center { flex: 1; }
+.main-title {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--grey);
+  letter-spacing: 0.3px;
+}
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.reset-btn {
+  background: var(--black);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+.reset-btn:hover { opacity: .75; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-section { padding: 0 56px 32px; }
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+.progress-track {
+  height: 10px;
+  background: #DDD;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--green));
+  border-radius: 5px;
+  width: 0%;
+  transition: width .5s ease;
+}
+
+/* ─── ROADMAP ─── */
+.roadmap-wrap {
+  padding: 0 56px 48px;
+  overflow-x: auto;
+}
+.roadmap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  min-width: max-content;
+  position: relative;
+}
+.roadmap::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 40px;
+  right: 40px;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg, #CCC 0, #CCC 8px, transparent 8px, transparent 16px
+  );
+  z-index: 0;
+}
+
+/* ─── BLOCK CARD ─── */
+.block-card {
+  width: 300px;
+  flex-shrink: 0;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  position: relative;
+  z-index: 1;
+  transition: transform .2s, box-shadow .2s;
+}
+.block-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-h);
+}
+.block-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--accent);
+}
+
+.accent-purple { --accent: var(--purple); }
+.accent-blue   { --accent: var(--blue); }
+.accent-pink   { --accent: var(--pink); }
+.accent-yellow { --accent: var(--yellow); }
+.accent-green  { --accent: var(--green); }
+
+/* Intro block note box */
+.softskills-note {
+  margin-top: 14px;
+  background: rgba(200,184,240,0.15);
+  border: 1.5px dashed var(--purple);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #555;
+}
+.no-dz-badge {
+  display: inline-block;
+  background: var(--purple);
+  color: var(--black);
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+}
+
+.block-chip {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--black);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+.block-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.difficulty-badge {
+  display: inline-block;
+  background: var(--black);
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+/* block progress mini-bar */
+.mini-bar-wrap { margin-bottom: 14px; }
+.mini-bar-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--grey);
+  margin-bottom: 4px;
+}
+.mini-bar-track {
+  height: 5px;
+  background: #EEE;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.mini-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  width: 0%;
+  transition: width .4s ease;
+}
+
+/* module list */
+.module-list { list-style: none; }
+.module-item { border-bottom: 1px solid #F2F2F2; }
+.module-item:last-child { border-bottom: none; }
+
+.module-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 8px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.module-row:hover { background: rgba(0,0,0,.02); }
+.module-row:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+
+.px-check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  image-rendering: pixelated;
+}
+.module-text {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #333;
+  transition: color .2s;
+  user-select: none;
+}
+.module-item.done .module-text {
+  color: #AAAAAA;
+  text-decoration: line-through;
+}
+
+/* tip box */
+.tip-box {
+  margin-top: 14px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.03);
+  border-left: 3px solid var(--accent);
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: #555;
+}
+
+/* ─── CONNECTOR ─── */
+.connector {
+  display: flex;
+  align-items: center;
+  padding-top: 48px;
+  position: relative;
+  z-index: 1;
+}
+.connector svg { display: block; }
+
+/* ─── FINAL DESTINATION ─── */
+.final-card {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--card-bg);
+  color: var(--black);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow);
+  transition: transform .2s, box-shadow .2s;
+  border-top: 5px solid var(--purple);
+}
+.final-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-h);
+}
+.trophy-icon {
+  margin: 0 auto 14px;
+  display: block;
+  image-rendering: pixelated;
+}
+.final-badge {
+  display: inline-block;
+  background: #FFD700;
+  color: var(--black);
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 50px;
+  margin-bottom: 12px;
+}
+.final-title {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.final-items { list-style: none; text-align: left; }
+.final-items li {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--grey);
+  padding: 3px 0 3px 14px;
+  position: relative;
+}
+.final-items li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* ─── TIPS SECTION ─── */
+.tips-section { padding: 0 56px; }
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.tip-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+}
+.tip-num {
+  font-size: 48px;
+  font-weight: 900;
+  color: #EEEEEE;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+.tip-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.6;
+}
+.tip-text strong { font-weight: 800; color: var(--black); }
+
+/* ─── DATA ERRORS (shown instead of the page) ─── */
+.cjm-error {
+  margin: 36px 56px;
+  padding: 20px 24px;
+  background: #fff;
+  border-left: 4px solid #D33;
+  border-radius: 10px;
+  font: 13px/1.6 ui-monospace, monospace;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+  .header { padding: 24px 20px 16px; flex-wrap: wrap; }
+  .main-title { font-size: 26px; }
+  .progress-section, .roadmap-wrap, .tips-section { padding-left: 20px; padding-right: 20px; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .cjm-error { margin: 24px 20px; }
+}

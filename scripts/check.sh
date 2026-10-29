@@ -14,10 +14,19 @@ for f in "$site"/*; do
   [[ -d "$f" ]] || fail "site/$(basename "$f"): no files allowed in the site root, only CJM folders"
 done
 
+# The shared template every CJM page loads.
+for f in cjm.js cjm.css; do
+  [[ -f "$site/_shared/$f" ]] || fail "site/_shared/$f is missing"
+done
+
 names=()
 for dir in "$site"/*/; do
-  names+=("$(basename "$dir")")
+  name="$(basename "$dir")"
+  [[ "$name" == "_shared" ]] || names+=("$name")
 done
+
+validate=0
+command -v node >/dev/null && validate=1 || echo "WARNING: node not found, CJM data is not validated" >&2
 
 for name in ${names[@]+"${names[@]}"}; do
   [[ "$name" =~ ^[a-z0-9]+(-[a-z0-9]+)*-[0-9a-f]{6}$ ]] \
@@ -32,9 +41,12 @@ for name in ${names[@]+"${names[@]}"}; do
   grep -ioE '<meta[^>]*robots[^>]*>' "$page" | grep -qi noindex \
     || fail "site/$name/index.html: <head> must contain <meta name=\"robots\" content=\"noindex, nofollow\">"
 
-  # All Pages sites of the org share one origin, so a fixed localStorage key collides between CJMs.
-  if grep -q localStorage "$page" && ! grep -q 'location\.pathname' "$page"; then
-    fail "site/$name/index.html: localStorage key must include location.pathname, e.g. 'cjm-progress:' + location.pathname"
+  for f in cjm.js cjm.css; do
+    grep -qF "../_shared/$f" "$page" || fail "site/$name/index.html: must load ../_shared/$f"
+  done
+
+  if ((validate)); then
+    node "$root/scripts/validate-cjm.js" "$page" || errors=$((errors + 1))
   fi
 
   for other in "${names[@]}"; do
@@ -44,7 +56,7 @@ for name in ${names[@]+"${names[@]}"}; do
 done
 
 if ((errors > 0)); then
-  echo "$errors problem(s) found." >&2
+  echo "Check failed. Fix every ERROR above." >&2
   exit 1
 fi
 echo "OK: ${#names[@]} CJM(s) checked."

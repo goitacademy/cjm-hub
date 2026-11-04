@@ -18,7 +18,7 @@ The user usually pastes the course program as text. It can also be a file or an 
 4. Run `scripts/check.sh` and fix every error.
 5. Open the page for the user to review: `open site/<folder>/index.html`. Publish only after the user says it is OK.
 6. Commit (`feat(cjm): add <course-slug>`) and push to `main`.
-7. Give the user the URL: `https://goitacademy.github.io/cjm-hub/<folder>/`. It works 1–2 minutes after the push.
+7. Give the user the URL: `https://cjmhub.goit.global/<folder>/`. It works 1–2 minutes after the push.
 
 ## Change a CJM
 
